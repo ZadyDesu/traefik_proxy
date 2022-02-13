@@ -1,0 +1,16 @@
+## Dynamic configuration
+tcp:
+  routers:
+    Router-1:
+      # won't listen to entry point web
+      entryPoints:
+        - "ssh"
+      rule: "HostSNI(`example.com`)"
+      service: "service-1"
+      # will route TLS requests (and ignore non tls requests)
+      tls: {}
+  services:
+    service-1:
+      loadBalancer:
+        servers:
+        - address: "localhost:22"
